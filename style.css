@@ -25,13 +25,36 @@ label {
   font-size: 16px;
 }
 
-input {
+.pin-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+input[type="text"] {
   width: 100%;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 10px; /* Space between chunks */
+  background: transparent;
+}
+
+.pin-chunks {
+  display: flex;
+  justify-content: center;
+  margin-top: -30px; /* Adjust to position chunks over the input */
+}
+
+.chunk {
+  width: 30px;
+  height: 40px;
+  border: 2px solid #ccc;
+  margin: 0 5px;
   border-radius: 4px;
-  font-size: 16px;
+  background-color: #f9f9f9;
 }
 
 button {
@@ -51,4 +74,11 @@ button:hover {
 #error-message {
   color: red;
   font-size: 14px;
+}
+#pin-display {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
 }
