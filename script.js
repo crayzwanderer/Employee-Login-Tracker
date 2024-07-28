@@ -1,7 +1,15 @@
-// Array of valid PINs
-let validPINs = ["1234", "5678", "9101"];
+// Function to get valid PINs from localStorage
+function getValidPINs() {
+  const storedPINs = localStorage.getItem("validPINs");
+  return storedPINs ? JSON.parse(storedPINs) : ["1234", "5678", "9101"]; // Default PINs
+}
 
-// Function to update the PIN display
+// Function to save valid PINs to localStorage
+function saveValidPINs(pins) {
+  localStorage.setItem("validPINs", JSON.stringify(pins));
+}
+
+// Function to update PIN display
 function updatePinDisplay() {
   const pinDisplayDiv = document.getElementById("pin-display");
   pinDisplayDiv.innerHTML = ""; // Clear the existing content
@@ -38,6 +46,7 @@ function handlePinAddition(event) {
 
   if (pinInput && !validPINs.includes(pinInput)) {
     validPINs.push(pinInput); // Add new PIN to the array
+    saveValidPINs(validPINs); // Save updated PINs to localStorage
     updatePinDisplay(); // Update the displayed list of PINs
     document.getElementById("pin-input").value = ""; // Clear the input field
     errorMessage.textContent = ""; // Clear any previous error messages
@@ -45,6 +54,9 @@ function handlePinAddition(event) {
     errorMessage.textContent = "PIN is either empty or already exists.";
   }
 }
+
+// Initialize valid PINs from localStorage
+let validPINs = getValidPINs();
 
 // Add event listener for form submission
 document

@@ -15,8 +15,9 @@ body {
   text-align: center;
 }
 
-h2 {
+#error-message {
   margin-bottom: 20px;
+  color: red;
 }
 
 label {
@@ -71,7 +72,7 @@ button:hover {
   background-color: #0056b3;
 }
 
-#error-message {
+.eMessage {
   color: red;
   font-size: 14px;
 }
@@ -81,4 +82,8 @@ button:hover {
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
+  display: none;
+}
+.pin-display {
+  border: solid 3px black;
 }
