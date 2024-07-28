@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PIN Login Page</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="login-container">
@@ -20,23 +20,9 @@
           required
         />
         <button type="submit">Login</button>
-        <p class="eMessage" id="error-message"></p>
       </form>
     </div>
-    <div id="pin-display"></div>
-    <h2>Add New PIN</h2>
-    <form id="add-pin-form">
-      <label for="pin-input">New PIN:</label>
-      <input
-        type="text"
-        id="pin-input"
-        name="pin-input"
-        maxlength="4"
-        required
-      />
-      <button type="submit">Add PIN</button>
-      <p class="eMessage" id="error-message"></p>
-    </form>
+
     <script src="script.js"></script>
   </body>
 </html>

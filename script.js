@@ -51,7 +51,7 @@ function handlePinAddition(event) {
     document.getElementById("pin-input").value = ""; // Clear the input field
     errorMessage.textContent = ""; // Clear any previous error messages
   } else {
-    errorMessage.textContent = "PIN is either empty or already exists.";
+    errorMessage.textContent = "PIN is already in use";
   }
 }
 
