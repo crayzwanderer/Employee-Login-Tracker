@@ -3,21 +3,207 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PIN Login Page</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Practice</title>
   </head>
   <body>
-    <div class="login-container">
-      <form id="login-form">
-        <p id="error-message"></p>
-      </form>
-    </div>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PIN Management</title>
+        <link rel="stylesheet" href="styles.css" />
+      </head>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-color: #f4f4f4;
+        }
 
-    <div id="pin-display"></div>
+        .container {
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    <form id="add-pin-form">
-      <p id="error-message"></p>
-    </form>
-    <script src="script.js"></script>
+        form {
+          margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          margin-right: 10px;
+        }
+
+        button {
+          margin: 4px;
+          padding: 10px 20px;
+          border: none;
+          background-color: #007bff;
+          color: #fff;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+          border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+          padding: 10px;
+          text-align: center;
+        }
+
+        input[type="text"].edit {
+          width: 80%;
+        }
+      </style>
+      <body>
+        <div class="container">
+          <h2>Add New PIN</h2>
+          <form id="add-pin-form">
+            <label for="pin-input">New PIN:</label>
+            <input
+              type="text"
+              id="pin-input"
+              name="pin-input"
+              maxlength="4"
+              required
+            />
+            <button type="submit">Add PIN</button>
+            <p id="error-message"></p>
+          </form>
+
+          <h2>Manage PINs</h2>
+          <table id="pin-table">
+            <thead>
+              <tr>
+                <th>PIN</th>
+                <th>Action</th>
+                <th>Name</th>
+                <th>Position</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- PIN rows will be added here dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <script>
+          // Function to get valid PINs from localStorage
+          function getValidPINs() {
+            const storedPINs = localStorage.getItem("validPINs");
+            return storedPINs
+              ? JSON.parse(storedPINs)
+              : ["1234", "5678", "9101"]; // Default PINs
+          }
+
+          // Function to save valid PINs to localStorage
+          function saveValidPINs(pins) {
+            localStorage.setItem("validPINs", JSON.stringify(pins));
+          }
+
+          // Function to update PIN display in the table
+          function updatePinTable() {
+            const pinTableBody = document
+              .getElementById("pin-table")
+              .getElementsByTagName("tbody")[0];
+            pinTableBody.innerHTML = ""; // Clear the existing content
+
+            validPINs.forEach((pin, index) => {
+              const row = pinTableBody.insertRow();
+
+              // PIN cell
+              const pinCell = row.insertCell(0);
+              const pinInput = document.createElement("input");
+              pinInput.type = "text";
+              pinInput.value = pin;
+              pinInput.className = "edit";
+              pinCell.appendChild(pinInput);
+
+              // Action cell
+              const actionCell = row.insertCell(1);
+              const saveButton = document.createElement("button");
+              saveButton.textContent = "Save";
+              saveButton.addEventListener("click", () =>
+                savePin(index, pinInput.value)
+              );
+              actionCell.appendChild(saveButton);
+
+              const deleteButton = document.createElement("button");
+              deleteButton.textContent = "Delete";
+              deleteButton.addEventListener("click", () => deletePin(index));
+              actionCell.appendChild(deleteButton);
+            });
+          }
+
+          // Function to handle form submission for adding PINs
+          function handlePinAddition(event) {
+            event.preventDefault();
+
+            const pinInput = document.getElementById("pin-input").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (pinInput && !validPINs.includes(pinInput)) {
+              validPINs.push(pinInput); // Add new PIN to the array
+              saveValidPINs(validPINs); // Save updated PINs to localStorage
+              updatePinTable(); // Update the table with the new list of PINs
+              document.getElementById("pin-input").value = ""; // Clear the input field
+              errorMessage.textContent = ""; // Clear any previous error messages
+            } else {
+              errorMessage.textContent =
+                "PIN is either empty or already exists.";
+            }
+          }
+
+          // Function to save a modified PIN
+          function savePin(index, newPin) {
+            if (newPin && !validPINs.includes(newPin)) {
+              validPINs[index] = newPin;
+              saveValidPINs(validPINs);
+              updatePinTable();
+            }
+          }
+
+          // Function to delete a PIN
+          function deletePin(index) {
+            validPINs.splice(index, 1);
+            saveValidPINs(validPINs);
+            updatePinTable();
+          }
+
+          // Initialize valid PINs from localStorage
+          let validPINs = getValidPINs();
+
+          // Add event listener for adding new PIN
+          document
+            .getElementById("add-pin-form")
+            .addEventListener("submit", handlePinAddition);
+
+          // Initialize PIN table
+          updatePinTable();
+        </script>
+      </body>
+    </html>
   </body>
 </html>
